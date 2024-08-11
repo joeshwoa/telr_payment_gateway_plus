@@ -17,15 +17,15 @@ enum PhoneType {
 class TelrPaymentGatewayPlus {
   String _url = '';
 
-  String? getDeviceId() {
+  Future<String?> getDeviceId() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
     if (Platform.isAndroid) {
-      deviceInfo.androidInfo.then((value) {
+      await deviceInfo.androidInfo.then((value) {
         return value.id; // This is the unique device ID on Android
       },);
     } else if (Platform.isIOS) {
-      deviceInfo.iosInfo.then((value) {
+      await deviceInfo.iosInfo.then((value) {
         value.identifierForVendor; // This is the unique device ID on iOS
       },);
     }
@@ -136,8 +136,8 @@ class TelrPaymentGatewayPlus {
         builder.element('type', nest: () {
           builder.text(phoneType == PhoneType.android ? 'android' : 'ios');
         });
-        builder.element('id', nest: () {
-          builder.text(getDeviceId()??'');
+        builder.element('id', nest: () async {
+          builder.text(await getDeviceId()??'');
         });
       });
 
