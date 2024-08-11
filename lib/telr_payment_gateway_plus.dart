@@ -1,8 +1,5 @@
 library telr_payment_gateway_plus;
 
-import 'package:device_info_plus/device_info_plus.dart';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:telr_payment_gateway_plus/src/network_helper.dart';
 import 'package:telr_payment_gateway_plus/src/web_view_screen.dart';
@@ -16,21 +13,6 @@ enum PhoneType {
 /// Telr Payment Gateway Plus.
 class TelrPaymentGatewayPlus {
   String _url = '';
-
-  Future<String?> getDeviceId() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-
-    if (Platform.isAndroid) {
-      await deviceInfo.androidInfo.then((value) {
-        return value.id; // This is the unique device ID on Android
-      },);
-    } else if (Platform.isIOS) {
-      await deviceInfo.iosInfo.then((value) {
-        value.identifierForVendor; // This is the unique device ID on iOS
-      },);
-    }
-    return null;
-  }
 
   void alertShow(BuildContext context, String text) {
     showDialog(
@@ -121,6 +103,7 @@ class TelrPaymentGatewayPlus {
     required String currencyCode,
     required double amount,
     String languageCode = 'en',
+    required String deviceID,
     String description = 'Payment',}) {
     final builder = XmlBuilder();
     builder.processing('xml', 'version="1.0"');
@@ -137,7 +120,7 @@ class TelrPaymentGatewayPlus {
           builder.text(phoneType == PhoneType.android ? 'android' : 'ios');
         });
         builder.element('id', nest: () async {
-          builder.text(await getDeviceId()??'');
+          builder.text(deviceID);
         });
       });
 
