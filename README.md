@@ -1,39 +1,87 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+<img src="https://skillicons.dev/icons?i=flutter,dart" />
+<br>
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+# Telr Payment Gateway Plus
+Telr Payment Gateway Plus is a Flutter package that provides a seamless integration with the Telr payment gateway, allowing you to process payments easily within your Flutter apps. This package simplifies the integration by handling the communication between your app and the Telr API.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## Table of Contents
+1. Overview
+2. Features
+3. Installation
+4. Usage
+5. Configuration
+6. Contributing
+7. License
+   
+## Overview
+The Telr Payment Gateway Plus package enables developers to integrate Telr’s payment processing functionality into their Flutter apps. With support for multiple payment methods, this package provides a flexible and secure solution for handling transactions.
 
 ## Features
+Easy setup: Quickly integrate Telr payments with minimal code.
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Support for various payment methods: Credit cards, debit cards, and more.
 
-## Getting started
+Secure: Communicates with Telr API using secure protocols.
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Customizable UI: You can customize the payment experience to fit your app’s design.
 
-## Usage
+Transaction management: Support for starting, completing, and tracking payment statuses.
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+## Installation
+To use this package, add telr_payment_gateway_plus as a dependency in your pubspec.yaml file:
+````
+dependencies:
+  telr_payment_gateway_plus: ^1.0.0
+````
+Then, run the following command in your project directory:
+```
+flutter pub get
 ```
 
-## Additional information
+## Usage
+Here’s a basic example to get you started with Telr Payment Gateway Plus:
+````
+import 'package:telr_payment_gateway_plus/telr_payment_gateway_plus.dart';
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+void initiatePayment() {
+  TelrPaymentGatewayPlus.initiatePayment(
+    amount: 100.00,
+    currency: 'AED',
+    customerName: 'John Doe',
+    customerEmail: 'johndoe@example.com',
+    onSuccess: (response) {
+      print('Payment successful: ${response.transactionId}');
+    },
+    onError: (error) {
+      print('Payment failed: $error');
+    },
+  );
+}
+````
+
+## Example
+To see a full example of how to integrate and customize Telr payment processing in your app, check the example directory in the repository.
+
+## Configuration
+Before using the package, you need to configure your Telr merchant credentials and other necessary parameters.
+
+Add your credentials in the appropriate place in your app:
+````
+TelrPaymentGatewayPlus.configure(
+  merchantId: 'your_merchant_id',
+  storeId: 'your_store_id',
+  authKey: 'your_auth_key',
+);
+````
+
+## Contributing
+We welcome contributions to improve this package. Please follow the steps below:
+
+1. Fork the repository.
+2. Create a new branch: ```git checkout -b feature-name```.
+3. Make your changes and commit them: ```git commit -m 'Add some feature'```.
+4. Push to the branch: ```git push origin feature-name```.
+5. Open a pull request.
+   
+##  License
+This package is licensed under the MIT License. See the LICENSE file for details.
